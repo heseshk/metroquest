@@ -1,29 +1,30 @@
 // ==================== ОСНОВНЫЕ ПЕРЕМЕННЫЕ И ДАННЫЕ ====================
 
+
 // Данные для квиза
 const quizData = [
     {
-        image: "https://via.placeholder.com/500x300/4CAF50/FFFFFF?text=Станция+Маяковская",
+        image: "images/mayakovskaya.jpg",
         correctAnswer: "Маяковская",
         wrongAnswers: ["Чеховская", "Пушкинская", "Тверская"]
     },
     {
-        image: "https://via.placeholder.com/500x300/2196F3/FFFFFF?text=Станция+Комсомольская",
+        image: "images/komsomolskaya.jpg",
         correctAnswer: "Комсомольская",
         wrongAnswers: ["Курская", "Киевская", "Белорусская"]
     },
     {
-        image: "https://via.placeholder.com/500x300/FF9800/FFFFFF?text=Станция+Площадь+Революции", 
+        image: "images/ploshad-revolutsii.jpg", 
         correctAnswer: "Площадь Революции",
         wrongAnswers: ["Театральная", "Охотный ряд", "Арбатская"]
     },
     {
-        image: "https://via.placeholder.com/500x300/9C27B0/FFFFFF?text=Станция+Новослободская",
+        image: "images/novoslobodskaya.jpg",
         correctAnswer: "Новослободская",
         wrongAnswers: ["Белорусская", "Проспект Мира", "Цветной бульвар"]
     },
     {
-        image: "https://via.placeholder.com/500x300/795548/FFFFFF?text=Станция+Киевская",
+        image: "images/kievskaya.jpg",
         correctAnswer: "Киевская",
         wrongAnswers: ["Смоленская", "Краснопресненская", "Баррикадная"]
     }
