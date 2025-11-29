@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МетроКвест - Игра про московское метро</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Главная страница -->
+        <div id="main-page" class="page active">
+            <header class="main-header">
+                <h1>🚇 МетроКвест</h1>
+                <p class="tagline">Исследуй тайны московского метро!</p>
+            </header>
+
+            <main class="main-content">
+                <section class="hero">
+                    <h2>Добро пожаловать в подземный мир!</h2>
+                    <p>Угадывай станции, решай головоломки и узнавай интересные факты</p>
+                    <div class="hero-buttons">
+                        <button onclick="startQuiz()" class="btn btn-primary">🎯 Начать квиз</button>
+                        <button onclick="showFacts()" class="btn btn-secondary">📚 Факты о метро</button>
+                        <button onclick="showPuzzles()" class="btn btn-secondary">🧩 Головоломки</button>
+                    </div>
+                </section>
+
+                <section class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Фотоквиз</h3>
+                        <p>Угадай станцию метро по фотографии. 10 интересных станций ждут тебя!</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧩</div>
+                        <h3>Головоломки</h3>
+                        <p>Найди лишнюю станцию и собери схему метро. Проверь свою логику!</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Интересные факты</h3>
+                        <p>Узнай то, о чём не знают даже коренные москвичи. 10 уникальных фактов!</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Страница квиза -->
+        <div id="quiz-page" class="page">
+            <header class="quiz-header">
+                <button onclick="goHome()" class="btn-back">← Назад</button>
+                <h2>🎯 Фотоквиз: Угадай станцию</h2>
+                <div class="quiz-progress">
+                    <span id="quiz-progress">Вопрос 1/5</span>
+                    <span id="quiz-score">Очки: 0</span>
+                </div>
+            </header>
+
+            <main class="quiz-content">
+                <div id="question-container">
+                    <div class="image-container">
+                        <img id="station-image" src="" alt="Фото станции метро" class="station-photo">
+                    </div>
+                    
+                    <div id="answers-container" class="answers-grid">
+                        <!-- Кнопки с ответами появятся здесь -->
+                    </div>
+                </div>
+
+                <div class="quiz-controls">
+                    <button id="next-btn" onclick="nextQuestion()" class="btn btn-next">Следующий вопрос →</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Страница фактов -->
+        <div id="facts-page" class="page">
+            <header class="page-header">
+                <button onclick="goHome()" class="btn-back">← Назад</button>
+                <h2>📚 Факты о московском метро</h2>
+            </header>
+
+            <main class="facts-content">
+                <div class="facts-container">
+                    <!-- Факты будут загружены через JavaScript -->
+                </div>
+            </main>
+        </div>
+
+        <!-- Страница головоломок -->
+        <div id="puzzles-page" class="page">
+            <header class="page-header">
+                <button onclick="goHome()" class="btn-back">← Назад</button>
+                <h2>🧩 Головоломки МетроКвест</h2>
+            </header>
+
+            <main class="puzzles-content">
+                <div class="puzzles-menu">
+                    <button onclick="showPuzzle('find-extra')" class="puzzle-card">
+                        <span class="puzzle-icon">🔍</span>
+                        <span class="puzzle-title">Найди лишнюю станцию</span>
+                        <span class="puzzle-desc">Определи, какая станция не принадлежит к группе</span>
+                    </button>
+                    
+                    <button onclick="showPuzzle('build-map')" class="puzzle-card">
+                        <span class="puzzle-icon">🧩</span>
+                        <span class="puzzle-title">Собери схему метро</span>
+                        <span class="puzzle-desc">Перетащи станции на правильные места</span>
+                    </button>
+                </div>
+
+                <!-- Головоломка 1: Найди лишнюю станцию -->
+                <div id="find-extra" class="puzzle-container">
+                    <h3>🔍 Найди лишнюю станцию</h3>
+                    <p class="puzzle-instruction">Среди этих четырёх станций одна не принадлежит к той же группе, что и остальные. Какая?</p>
+                    
+                    <div id="stations-container" class="stations-container">
+                        <!-- Станции появятся здесь -->
+                    </div>
+                    
+                    <div class="puzzle-controls">
+                        <button onclick="checkExtraStation()" class="btn btn-check">✅ Проверить ответ</button>
+                        <button onclick="newExtraStationPuzzle()" class="btn btn-new">🔄 Новая головоломка</button>
+                    </div>
+                    
+                    <div id="puzzle1-feedback" class="feedback"></div>
+                </div>
+
+                <!-- Головоломка 2: Собери схему метро -->
+                <div id="build-map" class="puzzle-container">
+                    <h3>🧩 Собери схему метро</h3>
+                    <p class="puzzle-instruction">Перетащи названия станций на правильные места на схеме!</p>
+                    
+                    <div class="map-puzzle-area">
+                        <div class="map-container">
+                            <div class="metro-line">
+                                <div class="line-label">🎯 Кольцевая линия</div>
+                                <div class="station-slot" data-correct="Комсомольская" ondrop="dropStation(event)" ondragover="allowDrop(event)"></div>
+                                <div class="station-slot" data-correct="Курская" ondrop="dropStation(event)" ondragover="allowDrop(event)"></div>
+                                <div class="station-slot" data-correct="Таганская" ondrop="dropStation(event)" ondragover="allowDrop(event)"></div>
+                                <div class="station-slot" data-correct="Павелецкая" ondrop="dropStation(event)" ondragover="allowDrop(event)"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="stations-pool">
+                            <h4>Станции для перетаскивания:</h4>
+                            <div class="drag-stations">
+                                <div class="station-item" draggable="true" id="drag-1" ondragstart="dragStation(event)">Комсомольская</div>
+                                <div class="station-item" draggable="true" id="drag-2" ondragstart="dragStation(event)">Курская</div>
+                                <div class="station-item" draggable="true" id="drag-3" ondragstart="dragStation(event)">Таганская</div>
+                                <div class="station-item" draggable="true" id="drag-4" ondragstart="dragStation(event)">Павелецкая</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="puzzle-controls">
+                        <button onclick="checkMapPuzzle()" class="btn btn-check">✅ Проверить схему</button>
+                        <button onclick="resetMapPuzzle()" class="btn btn-new">🔄 Начать заново</button>
+                    </div>
+                    
+                    <div id="puzzle2-feedback" class="feedback"></div>
+                </div>
+
+                <button onclick="showPuzzlesMenu()" class="btn btn-back">← К выбору головоломок</button>
+            </main>
+        </div>
+
+        <!-- Страница результатов квиза -->
+        <div id="results-page" class="page">
+            <header class="page-header">
+                <h2>🎉 Результаты квиза!</h2>
+            </header>
+
+            <main class="results-content">
+                <div id="final-score" class="final-score"></div>
+                <div class="results-actions">
+                    <button onclick="restartQuiz()" class="btn btn-primary">🔄 Пройти ещё раз</button>
+                    <button onclick="goHome()" class="btn btn-secondary">🏠 На главную</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Страница помощи -->
+        <div id="help-page" class="page">
+            <header class="page-header">
+                <button onclick="goHome()" class="btn-back">← Назад</button>
+                <h2>🛠️ Помощь и поддержка</h2>
+            </header>
+
+            <main class="help-content">
+                <div class="help-section">
+                    <h3>🔍 Частые проблемы и решения</h3>
+                    
+                    <div class="problem-item">
+                        <div class="problem-question">❓ Квиз не запускается</div>
+                        <div class="problem-answer">
+                            <strong>Решение:</strong> Обнови страницу (F5). Если не помогло, проверь подключение к интернету.
+                        </div>
+                    </div>
+                    
+                    <div class="problem-item">
+                        <div class="problem-question">❓ Фотографии не загружаются</div>
+                        <div class="problem-answer">
+                            <strong>Решение:</strong> В демо-версии мы используем заглушки. В реальном проекте здесь будут настоящие фото станций.
+                        </div>
+                    </div>
+                    
+                    <div class="problem-item">
+                        <div class="problem-question">❓ Не работает перетаскивание</div>
+                        <div class="problem-answer">
+                            <strong>Решение:</strong> Используй современный браузер (Chrome, Firefox, Edge). Кликни на станцию и перетащи её.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h3>📧 Обратная связь</h3>
+                    <p>Нашли ошибку или есть предложения? Напиши нам!</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <span>Email: metroquest@school.ru</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">💬</span>
+                            <span>Telegram: @metroquest_support</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">🏫</span>
+                            <span>Школа: Обратись к учителю информатики</span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Футер сайта -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <span>МетроКвест © 2025-2026</span>
+            <button onclick="showHelpPage()" class="footer-link">🛠️ Помощь</button>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
